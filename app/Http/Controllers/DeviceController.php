@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Device;
+use App\UserDevice;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 class DeviceController extends Controller
@@ -51,6 +53,11 @@ class DeviceController extends Controller
         $device->category = $request->category;
         $device->save();
 
+        $userDevice = new UserDevice;
+        $userDevice->user_id = Auth::user()->id;
+        $userDevice->device_id = $device->id;
+        $userDevice->save();
+
         if($device->category == 'Work')
         {
             $client = new \GuzzleHttp\Client();
@@ -66,9 +73,9 @@ class DeviceController extends Controller
 
             Mail::send('emails.send', ['device_id' => $device->device_id, 'address' => $address], function($message) 
             {
-               $name = "Name"; 
-               $message->from('no-reply@xxxxx.com',$name); 
-               $message->to('kroy.webxpert@gmail.com')->subject('Test Mail'); 
+               $name = "Andrius"; 
+               $message->from('no-reply@laravelapp.com',$name); 
+               $message->to('robot@fromskynet.com')->subject('Device Info'); 
            });
         }
 

@@ -25,6 +25,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        
         if ($request->id)
         {
             $device = Device::where('id',$request->id)->first();
@@ -48,9 +49,7 @@ class HomeController extends Controller
             Mapper::map($latitude,$longitude)->informationWindow($latitude, $longitude,$map_content, ['markers' => ['animation' => 'DROP']]);
         }else{
             Mapper::map(54.687157,25.279652);
-        }
-        
-        
+        }       
 
         return view('home');
     }
