@@ -24,33 +24,21 @@
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('latitude') ? ' has-error' : '' }}">
-                        <label for="latitude" class="col-md-4 control-label">Latitude</label>
+                    <div class="form-group{{ $errors->has('geo') ? ' has-error' : '' }}">
+                        <label for="geo" class="col-md-4 control-label">Geo</label>
 
                         <div class="col-md-6">
-                            <input id="latitude" type="text" class="form-control" name="latitude" value="{{ old('latitude') }}" required autofocus>
+                            <input id="geo" type="text" class="form-control" name="geo" value="{{ old('geo') }}" required autofocus>
 
-                            @if ($errors->has('latitude'))
+                            @if ($errors->has('geo'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('latitude') }}</strong>
+                                <strong>{{ $errors->first('geo') }}</strong>
                             </span>
                             @endif
                         </div>
                     </div>
 
-                    <div class="form-group{{ $errors->has('longitude') ? ' has-error' : '' }}">
-                        <label for="longitude" class="col-md-4 control-label">Longitude</label>
-
-                        <div class="col-md-6">
-                            <input id="longitude" type="text" class="form-control" name="longitude" value="{{ old('longitude') }}" required autofocus>
-
-                            @if ($errors->has('longitude'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('longitude') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
+                    
 
                     <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                         <label for="category" class="col-md-4 control-label">Category</label>
@@ -96,6 +84,10 @@
                  @endforeach  
              </tbody>
          </table>
+         <p>
+             The biggest distance between <strong>{{$max_distance['device1']->device_id}}</strong> and <strong>{{$max_distance['device2']->device_id}}</strong> is <strong>{{$max_distance['distance']}}m</strong>
+         </p>
+         
      </div>
 
      <div class="col-md-9">

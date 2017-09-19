@@ -41,15 +41,19 @@ class DeviceController extends Controller
         //
         $this->validate($request,[
             'device_id' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
+            'geo' => 'required',
             'category' => 'required',
         ]);
 
+        $geo_string = $request->geo;
+        $geo = explode(",", $geo_string);
+        $latitude = floatval($geo[0]);
+        $longitude = floatval($geo[1]);
+
         $device = new Device();
         $device->device_id = $request->device_id;
-        $device->latitude = $request->latitude;
-        $device->longitude = $request->longitude;
+        $device->latitude = $latitude;
+        $device->longitude = $longitude;
         $device->category = $request->category;
         $device->save();
 
@@ -79,7 +83,7 @@ class DeviceController extends Controller
            });
         }
 
-        return redirect()->route('home', ['id' => $device->id]);
+        return redirect()->route('home');
     }
 
     /**
