@@ -54,9 +54,12 @@ class HomeController extends Controller
                 $max_distance['distance'] = 0;
                 $earthRadius = 6371000;
                 for ($i=0; $i < count($user_devices); $i++) {
+
                     $latitudeFrom = $user_devices[$i]->latitude;
                     $longitudeFrom = $user_devices[$i]->longitude;
+
                     for ($z=0; $z < count($user_devices); $z++) {
+
                         $latitudeTo = $user_devices[$z]->latitude;
                         $longitudeTo = $user_devices[$z]->longitude;
 
@@ -70,11 +73,13 @@ class HomeController extends Controller
 
                         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
                         $distance = $angle * $earthRadius;
+                        
                         if($distance > $max_distance['distance']){
                             $max_distance['device1'] = $user_devices[$i];
                             $max_distance['device2'] = $user_devices[$z];
                             $max_distance['distance'] = round($distance,2);
                         }
+
                     }
                 }
                 return view('home',['max_distance' => $max_distance]);

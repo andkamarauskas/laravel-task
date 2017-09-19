@@ -67,7 +67,7 @@
                 </form>
             </div>
 
-
+            @if(count(Auth::user()->devices) > 0)
             <table class="table table-sm">
                 <thead>
                     <tr>
@@ -78,19 +78,21 @@
                 <tbody>
                     @foreach(Auth::user()->devices as $device)
                     <tr>
-                     <td>{{$device->device_id}}</td>
-                     <td>{{$device->category}}</td> 
-                 </tr>
-                 @endforeach  
-             </tbody>
-         </table>
-         <p>
-             The biggest distance between <strong>{{$max_distance['device1']->device_id}}</strong> and <strong>{{$max_distance['device2']->device_id}}</strong> is <strong>{{$max_distance['distance']}}m</strong>
-         </p>
-         
-     </div>
+                       <td>{{$device->device_id}}</td>
+                       <td>{{$device->category}}</td> 
+                    </tr>
+                   @endforeach  
+               </tbody>
+           </table>
+           @endif
+           @if(isset($max_distance['distance']))
+           <p>
+               The biggest distance between <strong>{{$max_distance['device1']->device_id}}</strong> and <strong>{{$max_distance['device2']->device_id}}</strong> is <strong>{{$max_distance['distance']}}m</strong>
+           </p>
+           @endif
+       </div>
 
-     <div class="col-md-9">
+       <div class="col-md-9">
         <div style="width: 100%; height: 500px;">
             {!! Mapper::render() !!}
         </div>
