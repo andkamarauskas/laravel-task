@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Mapper;
 use App\Device;
 use Auth;
+use GeoHelper;
 
 class HomeController extends Controller
 {
@@ -26,39 +27,32 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $user_devices = Auth::user()->devices;
-        if (count($user_devices) > 0)
+        $user_devices_amount  = count($user_devices);
+        if ($user_devices_amount > 0)
         {
             $device = Device::where('id',$user_devices->last()->id)->first();
             $latitude = $device->latitude;
             $longitude = $device->longitude;
             
-            $client = new \GuzzleHttp\Client();
-            $res = $client->request('GET',
-                'http://nominatim.openstreetmap.org/reverse?format=json&lat='
-                .$latitude 
-                .'&lon='
-                .$longitude
-                . '&zoom=18&addressdetails=1');
-            $res = $res->getBody();
-            $res = json_decode($res);
-            $address = $res->display_name;
+            $address = GeoHelper::get_address_from_geo($latitude,$longitude);
 
             $map_content = 'Device id: ' . $device->device_id .'<br>'.
             'Address: ' . $address .'<br>'.
             'Category: ' . $device->category ;
             Mapper::map($latitude,$longitude)->informationWindow($latitude, $longitude,$map_content, ['markers' => ['animation' => 'DROP']]);
 
-            if(count($user_devices) > 1)
+            if($user_devices_amount > 1)
             {
                 $max_distance['distance'] = 0;
                 $earthRadius = 6371000;
-                for ($i=0; $i < count($user_devices); $i++) {
+                for ($i=0; $i < $user_devices_amount; $i++) {
 
                     $latitudeFrom = $user_devices[$i]->latitude;
                     $longitudeFrom = $user_devices[$i]->longitude;
 
-                    for ($z=0; $z < count($user_devices); $z++) {
+                    for ($z=$i; $z < $user_devices_amount; $z++) {
 
                         $latitudeTo = $user_devices[$z]->latitude;
                         $longitudeTo = $user_devices[$z]->longitude;
@@ -73,7 +67,7 @@ class HomeController extends Controller
 
                         $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
                         $distance = $angle * $earthRadius;
-                        
+                        // echo "i = " . $i . " " ."z=" . $z . "<br>";
                         if($distance > $max_distance['distance']){
                             $max_distance['device1'] = $user_devices[$i];
                             $max_distance['device2'] = $user_devices[$z];

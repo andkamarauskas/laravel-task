@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Device;
 use App\UserDevice;
+use GeoHelper;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -64,16 +65,7 @@ class DeviceController extends Controller
 
         if($device->category == 'Work')
         {
-            $client = new \GuzzleHttp\Client();
-            $res = $client->request('GET',
-                'http://nominatim.openstreetmap.org/reverse?format=json&lat='
-                .$device->latitude 
-                .'&lon='
-                . $device->longitude
-                . '&zoom=18&addressdetails=1');
-            $res = $res->getBody();
-            $res = json_decode($res);
-            $address = $res->display_name;
+            $address = GeoHelper::get_address_from_geo($device->latitude ,$device->longitude);
 
             Mail::send('emails.send', ['device_id' => $device->device_id, 'address' => $address], function($message) 
             {
