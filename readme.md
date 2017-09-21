@@ -1,53 +1,18 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+UZDUOTIS:
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+A) Sukurti web langa, kuriame butu 4 mygtukai/inputai:
 
-## About Laravel
+1.Device id - cia leisti isivesti bet koki numeri is skaiciu ir raidziu
+2.Koordinates – leisti ivesti bet kokias gps kordinates, pvz.: 9.0200417°, -79.5189333°
+3.Pasirinkimas/selectas vienam is dvieju: "Home" ir "Work"
+4.Mygtukas "Send".
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+Paspaudus mygtuka "Send" - programa turetu issiusti savo buvimo vieta, t.y gps kordinates, pasirinkima home arba work, bei device id i duombaze. 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
-
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](http://patreon.com/taylorotwell):
-
-- **[Vehikl](http://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Styde](https://styde.net)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+B) Backend dalis, admino panele.
+1. Prisijungimo langas. Sukurti 3 bet kokius userius su bet kokiu vardu ir slaptazodziu.
+2. Kai bet kuris useris prisijungia, jis turi matyti langa kuris susideda is dvieju daliu. Desineje zemelapis(tarkim google maps), kaireje tuscias langas(~20% ekrano uzimantis) kuriame butu mygtukas „Add device“. Ji paspaudus turi leisti ivesti device id.
+3. Kai web lange A, paspaudziama „Send“ – backend dalyje B ant zemelapio turi atsirasti pointeris/pozicija ant zemelapio.
+4. Paspaudus ant ikono zemelapyje, turi atsiversti kazkoks popupas kuriame matytusi device id, home arba work ir adresas(ne kordinates). Kordinaciu pavertimui i adresa galima naudoti bet koki osm geocoderi(pavyzdys cia: http://wiki.openstre.../wiki/Nominatim), pakanka paduoti per url kordinates ir tau grazins adresa.
+5. Jeigu web dalyje A issiuncia parametra "Work", t.y pazymejes buna work, issiusti emaila su device id ir adresu.
+6.Backende, kaireje apacioje po visais device, parasyti kokie device turi didziausia atstuma tarp saves ir koks jis.
